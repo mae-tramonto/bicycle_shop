@@ -1,3 +1,4 @@
+
 class Bicycle(object):
     def __init__(self, model, weight, prod_cost):
         self.model= model
@@ -35,14 +36,16 @@ class Customer(object):
         for bicycle in bike_shop.stock:
             if bike_shop.sale_price(bicycle) <= self.funds:
                 affordable.append(bicycle)
-                return affordable
-                
+            
+        return affordable
+
     def buy(self, bike, bike_shop):
-        potential_bikes = potential_bikes(bike_shop)
-        if bike in potential_bikes:
+        self.poss_bikes= []
+        options = self.potential_bikes(bike_shop)
+        if bike in options:
             self.poss_bikes.append(bike)
             self.funds -= bike_shop.sale_price(bike)
             bike_shop.stock.remove(bike)
             bike_shop.computed_profit += bike_shop.profit(bike)
-            print("The computed profit after this purchase is {} .".format(bike.shop.computed_profit))
+            print("The computed profit after this purchase is {} .".format(bike_shop.computed_profit))
 
