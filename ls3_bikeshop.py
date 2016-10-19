@@ -1,3 +1,4 @@
+import math
 
 class Bicycle(object):
     def __init__(self, model, weight, prod_cost):
@@ -6,7 +7,7 @@ class Bicycle(object):
         self.prod_cost= prod_cost
 
 
-    
+
 class Bike_shop(object):
     def __init__(self, name, stock= []):
         self.name = name
@@ -29,8 +30,6 @@ class Customer(object):
         self.funds = funds
         self.poss_bikes = poss_bikes
         
-    # def funds(self):
-    #     self.funds - sale_price(bicycle)
     def potential_bikes(self, bike_shop):
         affordable= []
         for bicycle in bike_shop.stock:
@@ -47,5 +46,5 @@ class Customer(object):
             self.funds -= bike_shop.sale_price(bike)
             bike_shop.stock.remove(bike)
             bike_shop.computed_profit += bike_shop.profit(bike)
-            print("The computed profit after this purchase is {} .".format(bike_shop.computed_profit))
+            print("The computed profit after this purchase is {}.".format(math.floor(bike_shop.computed_profit)))
 
