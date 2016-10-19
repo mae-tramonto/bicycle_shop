@@ -1,4 +1,5 @@
 from ls3_bikeshop import Bicycle, Bike_shop, Customer
+import math
 
 def main():
     bike_shop= Bike_shop("Biped Pedalling")
@@ -19,6 +20,7 @@ def main():
 
     customers= [Lily, Kofi, Erin]
     
+    
     for customer in customers:
         print("  ")
         print(customer.name)
@@ -27,16 +29,20 @@ def main():
         print("Ok, these are the bikes in your price range.")
         
         for bike in customer.potential_bikes(bike_shop):
-            print("   " + bike.model, bike_shop.sale_price(bike))
-            
+            print("   " + str(bike.model) + ";   weight: " + str(bike.weight)+ " kgs " + " price:  $" + str(bike_shop.sale_price(bike)))
         buying= input("Which bicycle would you like to buy? ").lower()
-        if bike in customer.potential_bikes(bike_shop) == buying.lower():
-            customer.buy(bike, bike_shop) 
-            print(str(customer.name) + " has " + str(customer.funds) + " dollars left")
-            #print(bike_shop.stock) 
-            print(customer.poss_bikes)
-        else:
+        # import pdb; pdb.set_trace()
+        for bike in customer.potential_bikes(bike_shop):
+            if bike in customer.potential_bikes(bike_shop) and buying == bike.model:
+                customer.buy(bike, bike_shop) 
+                print(str(customer.name) + " has " + str(math.floor(customer.funds)) + " dollars left")
+                print(str(bike_shop.stock)) 
+                print(customer.poss_bikes)
+                break
+        else: 
             print("Hopefully we can find you a bike next time!")    
+                   
+                
     
     
     
