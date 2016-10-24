@@ -18,7 +18,7 @@ def main():
     print("Here is our current inventory.")
     print(len(bike_shop.stock))
     for bike in bike_shop.stock:
-        print(bike.model + " " + str(bike_shop.stock.count( bike))) 
+        print(str(bike_shop.stock.count(bike)) + " " + bike.model) 
         
     Lily = Customer("Lily", 1000)
     Dario = Customer("Dario", 500)
