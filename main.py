@@ -1,18 +1,30 @@
-from ls3_bikeshop import Bicycle, Bike_shop, Customer
+from ls3_bikeshop import Bicycle, Wheels, Frames, Bike_shop, Customer
 import math
 from collections import Counter
+import random
 
 def main():
     bike_shop= Bike_shop("Biped Pedalling")
     print("Welcome to "+ bike_shop.name)
     
-    speedster = Bicycle("speedster", 24.8, 324)
-    vaaroom = Bicycle("vaaroom", 36.2, 150)
-    cruiser = Bicycle("cruiser", 43.5, 125)
-    mountaineer = Bicycle("mountaineer", 38.1, 224)
-    cricket = Bicycle("cricket", 22.5, 547)
-    swift = Bicycle("swift", 18.2, 824)
+    raven= Wheels("raven", 5.4, 44.9)
+    thrush= Wheels("thrush", 8.6, 15.5)
+    feather= Wheels("feather", 2.5, 62)
     
+    aluminum= Frames("aluminum", 42, 199.99)
+    carbon= Frames("carbon", 16, 320)
+    steel= Frames("steel", 54, 80.7)
+    
+    speedster = Bicycle("speedster", random.choice(Frames.options), random.choice(Wheels.options))
+    vaaroom = Bicycle("vaaroom", random.choice(Frames.options), random.choice(Wheels.options))
+    cruiser = Bicycle("cruiser", random.choice(Frames), random.choice(Wheels))
+    mountaineer = Bicycle("mountaineer", random.choice(Frames), random.choice(Wheels))
+    cricket = Bicycle("cricket", random.choice(Frames), random.choice(Wheels))
+    swift = Bicycle("swift", random.choice(Frames), random.choice(Wheels))
+    
+    Frames.options= [aluminum, carbon, steel]
+    
+    Wheels.options= [raven, thrush, feather]
     
     bike_shop.stock= [speedster, speedster, speedster, vaaroom, vaaroom, vaaroom, cruiser, cruiser, mountaineer, mountaineer, cricket, cricket, swift]
     inventory= Counter(bike_shop.stock)
