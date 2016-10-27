@@ -8,23 +8,24 @@ def main():
     print("Welcome to "+ bike_shop.name)
     
     raven= Wheels("raven", 5.4, 44.9)
-    thrush= Wheels("thrush", 8.6, 15.5)
+    thrush= Wheels("thrush", 8.6, 10.5)
     feather= Wheels("feather", 2.5, 62)
     
+    
     aluminum= Frames("aluminum", 42, 199.99)
-    carbon= Frames("carbon", 16, 320)
+    carbon= Frames("carbon", 16, 360)
     steel= Frames("steel", 54, 80.7)
+    frames= [aluminum, carbon, steel]
     
-    speedster = Bicycle("speedster", random.choice(Frames.options), random.choice(Wheels.options))
-    vaaroom = Bicycle("vaaroom", random.choice(Frames.options), random.choice(Wheels.options))
-    cruiser = Bicycle("cruiser", random.choice(Frames), random.choice(Wheels))
-    mountaineer = Bicycle("mountaineer", random.choice(Frames), random.choice(Wheels))
-    cricket = Bicycle("cricket", random.choice(Frames), random.choice(Wheels))
-    swift = Bicycle("swift", random.choice(Frames), random.choice(Wheels))
     
-    Frames.options= [aluminum, carbon, steel]
+    speedster = Bicycle("speedster", random.choice(frames), wheels= [raven, raven])
+    vaaroom = Bicycle("vaaroom", random.choice(frames), wheels= [thrush, thrush])
+    cruiser = Bicycle("cruiser", random.choice(frames), wheels= [raven, raven])
+    mountaineer = Bicycle("mountaineer", random.choice(frames), wheels= [feather, feather])
+    cricket = Bicycle("cricket", random.choice(frames), wheels= [thrush, thrush])
+    swift = Bicycle("swift", random.choice(frames), wheels= [feather, feather])
     
-    Wheels.options= [raven, thrush, feather]
+    
     
     bike_shop.stock= [speedster, speedster, speedster, vaaroom, vaaroom, vaaroom, cruiser, cruiser, mountaineer, mountaineer, cricket, cricket, swift]
     inventory= Counter(bike_shop.stock)
