@@ -1,4 +1,4 @@
-from ls3_bikeshop import Bicycle, Wheels, Frames, Bike_shop, Customer
+from ls3_bikeshop import Bicycle, Wheels, Frames, Manufacturer, Bike_shop, Customer
 import math
 from collections import Counter
 import random
@@ -7,27 +7,30 @@ def main():
     bike_shop= Bike_shop("Biped Pedalling")
     print("Welcome to "+ bike_shop.name)
     
-    raven= Wheels("raven", 5.4, 44.9)
-    thrush= Wheels("thrush", 8.6, 10.5)
-    feather= Wheels("feather", 2.5, 62)
+    raven= Wheels("raven", 5.4, 19.9)
+    thrush= Wheels("thrush", 8.6, 8.5)
+    feather= Wheels("feather", 2.5, 43)
     
     
-    aluminum= Frames("aluminum", 42, 199.99)
-    carbon= Frames("carbon", 16, 360)
-    steel= Frames("steel", 54, 80.7)
+    aluminum= Frames("aluminum", 42, 130)
+    carbon= Frames("carbon", 16, 352)
+    steel= Frames("steel", 54, 50.7)
     frames= [aluminum, carbon, steel]
     
-    
-    speedster = Bicycle("speedster", random.choice(frames), wheels= [raven, raven])
-    vaaroom = Bicycle("vaaroom", random.choice(frames), wheels= [thrush, thrush])
-    cruiser = Bicycle("cruiser", random.choice(frames), wheels= [raven, raven])
-    mountaineer = Bicycle("mountaineer", random.choice(frames), wheels= [feather, feather])
-    cricket = Bicycle("cricket", random.choice(frames), wheels= [thrush, thrush])
-    swift = Bicycle("swift", random.choice(frames), wheels= [feather, feather])
+    spud_bikes= Manufacturer("Spud Bikes", bikes_made=["speedster", "vaaroom", "mountaineer"])
+    carin_bikes= Manufacturer("Carin Bikes", bikes_made= ["cruiser", "cricket", "swift"] )
     
     
+    speedster = Bicycle("speedster", random.choice(frames), "Spud Bikes", wheels= [raven, raven])
+    vaaroom = Bicycle("vaaroom", random.choice(frames), "Spud Bikes", wheels= [thrush, thrush])
+    cruiser = Bicycle("cruiser", random.choice(frames), "Carin Bikes", wheels= [raven, raven])
+    mountaineer = Bicycle("mountaineer", random.choice(frames), "Spud Bikes", wheels= [feather, feather])
+    cricket = Bicycle("cricket", random.choice(frames), "Carin Bikes", wheels= [thrush, thrush])
+    swift = Bicycle("swift", random.choice(frames), "Carin Bikes", wheels= [feather, feather])
     
-    bike_shop.stock= [speedster, speedster, speedster, vaaroom, vaaroom, vaaroom, cruiser, cruiser, mountaineer, mountaineer, cricket, cricket, swift]
+    
+    
+    bike_shop.stock= [speedster, speedster, speedster, vaaroom, vaaroom, vaaroom, cruiser, cruiser, mountaineer, mountaineer, cricket, cricket, swift, swift]
     inventory= Counter(bike_shop.stock)
     
     print("Here is our current inventory.")
@@ -51,7 +54,7 @@ def main():
         
         potential_bikes= Counter(customer.potential_bikes(bike_shop))
         for bike in potential_bikes:
-            print("   " + str(bike.model) + ";   weight: " + str(bike.weight)+ " kgs " + " price:  $" + str(bike_shop.sale_price(bike)))
+            print("   " + str(bike.model) + "; made by; " + str(bike.manufacturer) +"   weight: " + str(bike.weight)+ " kgs " + " price:  $" + str(bike_shop.sale_price(bike)))
         buying= input("Which bicycle would you like to buy? ").lower()
         
         for bike in customer.potential_bikes(bike_shop):
