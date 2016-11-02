@@ -17,8 +17,6 @@ def main():
     steel= Frames("steel", 54, 50.7)
     frames= [aluminum, carbon, steel]
     
-    spud_bikes= Manufacturer("Spud Bikes", bikes_made=["speedster", "vaaroom", "mountaineer"])
-    carin_bikes= Manufacturer("Carin Bikes", bikes_made= ["cruiser", "cricket", "swift"] )
     
     
     speedster = Bicycle("speedster", random.choice(frames), "Spud Bikes", wheels= [raven, raven])
@@ -28,6 +26,9 @@ def main():
     cricket = Bicycle("cricket", random.choice(frames), "Carin Bikes", wheels= [thrush, thrush])
     swift = Bicycle("swift", random.choice(frames), "Carin Bikes", wheels= [feather, feather])
     
+    
+    spud_bikes= Manufacturer("Spud Bikes", bikes_made=[speedster, vaaroom, mountaineer])
+    carin_bikes= Manufacturer("Carin Bikes", bikes_made= [cruiser, cricket, swift] )
     
     
     bike_shop.stock= [speedster, speedster, speedster, vaaroom, vaaroom, vaaroom, cruiser, cruiser, mountaineer, mountaineer, cricket, cricket, swift, swift]
@@ -52,14 +53,16 @@ def main():
         print("Ok, these are the bikes in your price range.")
         
         
-        potential_bikes= Counter(customer.potential_bikes(bike_shop))
+        print("These are the bikes that you can afford to buy from", spud_bikes)
+        potential_bikes= Counter(spud_bikes.potential_bikes(customer))
         for bike in potential_bikes:
-            print("   " + str(bike.model) + "; made by; " + str(bike.manufacturer) +"   weight: " + str(bike.weight)+ " kgs " + " price:  $" + str(bike_shop.sale_price(bike)))
+            print("   " + str(bike.model) + "; made by; " + str(bike.manufacturer) +"   weight: " + str(bike.weight)+ " kgs " + " price:  $" + str(bike_shop.sale_price))
+        
         buying= input("Which bicycle would you like to buy? ").lower()
         
-        for bike in customer.potential_bikes(bike_shop):
-            if bike in customer.potential_bikes(bike_shop) and buying == bike.model:
-                customer.buy(bike, bike_shop) 
+        for bike in spud_bikes.potential_bikes(customer):
+            if bike in spud_bikes.potential_bikes(customer) and buying  == bike.model:
+                customer.buy(spud_bikes, bike, bike_shop)
                 print(str(customer.name) + " has " + str(math.floor(customer.funds)) + " dollars left")
                 print("Here is our inventory after purchase.")
                 for element in Counter(bike_shop.stock):
@@ -69,8 +72,8 @@ def main():
            
         else: 
             print("Hopefully we can find you a bike next time!")    
-                
-                   
+        
+        
                 
     
     
