@@ -6,78 +6,73 @@ import random
 def main():
     bike_shop= Bike_shop("Biped Pedalling")
     print("Welcome to "+ bike_shop.name)
-    
+
     raven= Wheels("raven", 5.4, 19.9)
     thrush= Wheels("thrush", 8.6, 8.5)
     feather= Wheels("feather", 2.5, 43)
-    
-    
+
     aluminum= Frames("aluminum", 42, 130)
     carbon= Frames("carbon", 16, 352)
     steel= Frames("steel", 54, 50.7)
     frames= [aluminum, carbon, steel]
-    
-    
-    
-    speedster = Bicycle("speedster", random.choice(frames), "Spud Bikes", wheels= [raven, raven])
-    vaaroom = Bicycle("vaaroom", random.choice(frames), "Spud Bikes", wheels= [thrush, thrush])
-    cruiser = Bicycle("cruiser", random.choice(frames), "Carin Bikes", wheels= [raven, raven])
-    mountaineer = Bicycle("mountaineer", random.choice(frames), "Spud Bikes", wheels= [feather, feather])
-    cricket = Bicycle("cricket", random.choice(frames), "Carin Bikes", wheels= [thrush, thrush])
-    swift = Bicycle("swift", random.choice(frames), "Carin Bikes", wheels= [feather, feather])
-    
-    
-    spud_bikes= Manufacturer("Spud Bikes", bikes_made=[speedster, vaaroom, mountaineer])
-    carin_bikes= Manufacturer("Carin Bikes", bikes_made= [cruiser, cricket, swift] )
-    
-    
+
+    spud_bikes= Manufacturer("Spud Bikes")
+    carin_bikes= Manufacturer("Carin Bikes")
+
+    '''
+    The manufacturers should be real objects not strings.
+    '''
+    speedster = Bicycle("speedster", random.choice(frames), spud_bikes, wheels= [raven, raven])
+    vaaroom = Bicycle("vaaroom", random.choice(frames), spud_bikes, wheels= [thrush, thrush])
+    cruiser = Bicycle("cruiser", random.choice(frames), carin_bikes, wheels= [raven, raven])
+    mountaineer = Bicycle("mountaineer", random.choice(frames), spud_bikes, wheels= [feather, feather])
+    cricket = Bicycle("cricket", random.choice(frames), carin_bikes, wheels= [thrush, thrush])
+    swift = Bicycle("swift", random.choice(frames), carin_bikes, wheels= [feather, feather])
+
     bike_shop.stock= [speedster, speedster, speedster, vaaroom, vaaroom, vaaroom, cruiser, cruiser, mountaineer, mountaineer, cricket, cricket, swift, swift]
     inventory= Counter(bike_shop.stock)
-    
+
     print("Here is our current inventory.")
     for element in inventory:
-        print(element, inventory[element]) 
-        
+        print(element, inventory[element])
+
     Lily = Customer("Lily", 1000)
     Dario = Customer("Dario", 500)
     Erin = Customer("Erin", 200)
 
     customers= [Lily, Dario, Erin]
-    
-    
+
     for customer in customers:
         print("  ")
         print(customer.name)
         print("What's your budget? ")
         print("{} dollars.".format(customer.funds))
         print("Ok, these are the bikes in your price range.")
-        
-        
-        print("These are the bikes that you can afford to buy from", spud_bikes)
-        potential_bikes= Counter(spud_bikes.potential_bikes(customer))
+
+        '''
+        potential_bikes now belongs to bike_shop
+        sale_price() also belongs to a bike
+        '''
+        potential_bikes= Counter(bike_shop.potential_bikes(customer))
         for bike in potential_bikes:
-            print("   " + str(bike.model) + "; made by; " + str(bike.manufacturer) +"   weight: " + str(bike.weight)+ " kgs " + " price:  $" + str(bike_shop.sale_price))
-        
-        buying= input("Which bicycle would you like to buy? ").lower()
-        
-        for bike in spud_bikes.potential_bikes(customer):
-            if bike in spud_bikes.potential_bikes(customer) and buying  == bike.model:
-                customer.buy(spud_bikes, bike, bike_shop)
+            print("   " + str(bike.model) + "; made by; " + str(bike.manufacturer) +"   weight: " + str(bike.weight)+ " kgs " + " price:  $" + str(bike.sale_price(bike.manufacturer)))
+        buying = input("Which bicycle would you like to buy? ").lower()
+
+        '''
+        We want to loop through the bikes in the stock and check them
+        against potential bikes. Therefore it should be for bike in bike_shop.stock
+        instead of for bike in bike_shop.potential_bikes()
+        '''
+        for bike in bike_shop.stock:
+            if bike in bike_shop.potential_bikes(customer) and buying == bike.model:
+                customer.buy(bike, bike_shop)
                 print(str(customer.name) + " has " + str(math.floor(customer.funds)) + " dollars left")
                 print("Here is our inventory after purchase.")
                 for element in Counter(bike_shop.stock):
                     print(Counter(bike_shop.stock)[element], element)
-                #print(str(bike_shop.stock.count(bike)) + " " + bike.model)
                 break
-           
-        else: 
-            print("Hopefully we can find you a bike next time!")    
-        
-        
-                
-    
-    
-    
-    
+        else:
+            print("Hopefully we can find you a bike next time!")
+
 if __name__ == '__main__':
     main()
