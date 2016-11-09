@@ -19,9 +19,7 @@ def main():
     spud_bikes= Manufacturer("Spud Bikes")
     carin_bikes= Manufacturer("Carin Bikes")
 
-    '''
-    The manufacturers should be real objects not strings.
-    '''
+
     speedster = Bicycle("speedster", random.choice(frames), spud_bikes, wheels= [raven, raven])
     vaaroom = Bicycle("vaaroom", random.choice(frames), spud_bikes, wheels= [thrush, thrush])
     cruiser = Bicycle("cruiser", random.choice(frames), carin_bikes, wheels= [raven, raven])
@@ -49,20 +47,13 @@ def main():
         print("{} dollars.".format(customer.funds))
         print("Ok, these are the bikes in your price range.")
 
-        '''
-        potential_bikes now belongs to bike_shop
-        sale_price() also belongs to a bike
-        '''
+    
         potential_bikes= Counter(bike_shop.potential_bikes(customer))
         for bike in potential_bikes:
-            print("   " + str(bike.model) + "; made by; " + str(bike.manufacturer) +"   weight: " + str(bike.weight)+ " kgs " + " price:  $" + str(bike.sale_price(bike.manufacturer)))
+            print("   " + str(bike.model) + "; made by " + str(bike.manufacturer) +"   weight: " + str(bike.weight)+ " kgs " + " price:  $" + str(bike.sale_price(bike.manufacturer)))
         buying = input("Which bicycle would you like to buy? ").lower()
 
-        '''
-        We want to loop through the bikes in the stock and check them
-        against potential bikes. Therefore it should be for bike in bike_shop.stock
-        instead of for bike in bike_shop.potential_bikes()
-        '''
+
         for bike in bike_shop.stock:
             if bike in bike_shop.potential_bikes(customer) and buying == bike.model:
                 customer.buy(bike, bike_shop)

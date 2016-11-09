@@ -12,12 +12,6 @@ class Bicycle(object):
         self.weight= wheels[0].weight *2 + frame.weight
         self.manufacturer= manufacturer
 
-    '''
-    Since we are determining the saleprice of a bicycle, it
-    makes more sense to have the sale_price method in the bicycle
-    class than in the bike_shop. That way, we only need to pass the
-    manufacturer as a parameter
-    '''
     def sale_price(self, manufacturer):
         sale_price = manufacturer.upcharge(self) * 1.4
         return sale_price
@@ -57,27 +51,13 @@ class Bike_shop(object):
         self.stock = stock
         self.computed_profit = 0
 
-    '''
-    I have moved the potential bikes back to Bike_shop. This was entirely
-    my fault. Ideally, it's a bike_shop that offers bikes to customers
-    not manufacturers.
-    We loop through the stock in the bike shop
-    The we compare the upcharge with the cusomer funds.
-    Notice, we don't have to create a manufacturer parameter
-    We can acess upcharge() through the single bike's manufacturer using
-    the dot notation. ie: bicycle.manufacturer.upcharge(bicycle)
-    '''
     def potential_bikes(self, customer):
         affordable = []
         for bicycle in self.stock:
-            if bicycle.manufacturer.upcharge(bicycle) <= customer.funds:
+            if bicycle.sale_price(bicycle.manufacturer) <= customer.funds:
                 affordable.append(bicycle)
         return affordable
 
-    '''
-    Since sale_price() now belongs to the Bicycle class, we need
-    a bicycle instance to acess it.
-    '''
     def profit(self, manufacturer, bicycle):
         profit = bicycle.sale_price(manufacturer) - manufacturer.upcharge(bicycle)
         return profit
@@ -91,12 +71,6 @@ class Customer(object):
         self.funds = funds
         self.poss_bikes = poss_bikes
 
-    '''
-    1. Deleted self.poss_bikes= [] since it's already declared in the init, no
-    need to re-declare it.
-    2. saleprice() now belongs to a Bicycle class
-    3. profit() now has a manufacturer. 
-    '''
     def buy(self, bike, bike_shop):
         options = bike_shop.potential_bikes(self)
         if bike in options:
